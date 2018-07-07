@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MessageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().append("<html><body>Hello, Undertow!</body></html>").close();
+        String msg = getInitParameter("message");
+        resp.getWriter().append("<html><body>Hello, " + msg + "</body></html>").close();
     }
 }
