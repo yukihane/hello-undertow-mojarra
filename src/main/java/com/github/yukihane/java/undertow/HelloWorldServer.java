@@ -26,6 +26,12 @@ public class HelloWorldServer {
                                 .addMappings("/faces/*", "*.jsf", "*.faces", "*.xhtml")
                                 .setLoadOnStartup(1));
         servletBuilder.addServletContextAttribute(RIConstants.FACES_INITIALIZER_MAPPINGS_ADDED, Boolean.TRUE);
+
+//        servletBuilder.addServletContextAttribute("com.sun.faces.forceLoadConfiguration", Boolean.TRUE);
+//        servletBuilder.addServletContextAttribute("com.sun.faces.expressionFactory",
+//                "com.sun.el.ExpressionFactoryImpl");
+//        servletBuilder.addInitParameter("com.sun.faces.expressionFactory", "com.sun.el.ExpressionFactoryImpl");
+
         servletBuilder.addListener(new ListenerInfo(com.sun.faces.config.ConfigureListener.class));
         servletBuilder
                 .setResourceManager(new ClassPathResourceManager(HelloWorldServer.class.getClassLoader(), "static"));
