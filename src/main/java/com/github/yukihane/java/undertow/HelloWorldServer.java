@@ -21,19 +21,11 @@ public class HelloWorldServer {
                 .setClassLoader(HelloWorldServer.class.getClassLoader())
                 .setContextPath("/myapp")
                 .setDeploymentName("test.war")
-                .addServlets(
-                        Servlets.servlet("FacesServlet", FacesServlet.class)
-                                .addMappings("/faces/*", "*.jsf", "*.faces", "*.xhtml")
-                                .setLoadOnStartup(1));
-        servletBuilder.addServletContextAttribute(RIConstants.FACES_INITIALIZER_MAPPINGS_ADDED, Boolean.TRUE);
-
-//        servletBuilder.addServletContextAttribute("com.sun.faces.forceLoadConfiguration", Boolean.TRUE);
-//        servletBuilder.addServletContextAttribute("com.sun.faces.expressionFactory",
-//                "com.sun.el.ExpressionFactoryImpl");
-//        servletBuilder.addInitParameter("com.sun.faces.expressionFactory", "com.sun.el.ExpressionFactoryImpl");
-
-        servletBuilder.addListener(new ListenerInfo(com.sun.faces.config.ConfigureListener.class));
-        servletBuilder
+                .addServlets(Servlets.servlet("FacesServlet", FacesServlet.class)
+                        .addMappings("/faces/*", "*.jsf", "*.faces", "*.xhtml")
+                        .setLoadOnStartup(1))
+                .addServletContextAttribute(RIConstants.FACES_INITIALIZER_MAPPINGS_ADDED, Boolean.TRUE)
+                .addListener(new ListenerInfo(com.sun.faces.config.ConfigureListener.class))
                 .setResourceManager(new ClassPathResourceManager(HelloWorldServer.class.getClassLoader(), "static"));
 
         DeploymentManager manager = Servlets.defaultContainer().addDeployment(servletBuilder);

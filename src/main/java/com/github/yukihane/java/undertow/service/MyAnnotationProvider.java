@@ -10,9 +10,8 @@ import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.servlet.ServletContext;
 
+import com.github.yukihane.java.undertow.bean.Hello;
 import com.sun.faces.config.DelegatingAnnotationProvider;
-
-import hello.Hello;
 
 public class MyAnnotationProvider extends DelegatingAnnotationProvider {
 
@@ -24,6 +23,7 @@ public class MyAnnotationProvider extends DelegatingAnnotationProvider {
     public Map<Class<? extends Annotation>, Set<Class<?>>> getAnnotatedClasses(Set<URI> urls) {
         Map<Class<? extends Annotation>, Set<Class<?>>> parentRes = super.getAnnotatedClasses(urls);
 
+        // simplified implementation, without annotations scan
         Map<Class<? extends Annotation>, Set<Class<?>>> ret = new HashMap<>(parentRes);
 
         Set<Class<?>> parentSet = ret.get(ManagedBean.class);

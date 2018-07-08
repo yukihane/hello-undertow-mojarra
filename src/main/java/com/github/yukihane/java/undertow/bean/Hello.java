@@ -1,14 +1,10 @@
-package hello;
+package com.github.yukihane.java.undertow.bean;
 
 import javax.faces.bean.ManagedBean;
 
-@ManagedBean(name="hello")
+@ManagedBean
 public class Hello {
     final String world = "Hello World!";
-    
-    public Hello() {
-    	System.out.println("const");
-    }
 
     public String getWorld() {
         return world;
