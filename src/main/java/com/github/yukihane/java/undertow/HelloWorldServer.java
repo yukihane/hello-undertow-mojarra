@@ -1,13 +1,18 @@
 package com.github.yukihane.java.undertow;
 
+import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletException;
+
+import com.sun.faces.RIConstants;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.server.handlers.PathHandler;
+import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.DeploymentManager;
+import io.undertow.servlet.api.ListenerInfo;
 
 public class HelloWorldServer {
 
@@ -17,15 +22,17 @@ public class HelloWorldServer {
                 .setContextPath("/myapp")
                 .setDeploymentName("test.war")
                 .addServlets(
-                        Servlets.servlet("MessageServlet", MessageServlet.class)
-                                .addInitParam("message", "Hello World")
-                                .addMapping("/*"),
-                        Servlets.servlet("MyServlet", MessageServlet.class)
-                                .addInitParam("message", "MyServlet")
-                                .addMapping("/myservlet"));
+                        Servlets.servlet("FacesServlet", FacesServlet.class)
+                                .addMappings("/faces/*", "*.jsf", "*.faces", "*.xhtml")
+                                .setLoadOnStartup(1));
+        servletBuilder.addServletContextAttribute(RIConstants.FACES_INITIALIZER_MAPPINGS_ADDED, Boolean.TRUE);
+        servletBuilder.addListener(new ListenerInfo(com.sun.faces.config.ConfigureListener.class));
+        servletBuilder
+                .setResourceManager(new ClassPathResourceManager(HelloWorldServer.class.getClassLoader(), "static"));
 
         DeploymentManager manager = Servlets.defaultContainer().addDeployment(servletBuilder);
         manager.deploy();
+
         PathHandler path = Handlers.path(Handlers.redirect("/myapp"))
                 .addPrefixPath("/myapp", manager.start());
 
