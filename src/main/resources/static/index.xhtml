@@ -4,5 +4,8 @@
     </h:head>
     <h:body>
         index.xhtml: #{hello.world}
+        <h:form>
+          <h:commandButton id="submit" value="Submit" actionListener="#{hello.updateDate}" />
+        </h:form>
     </h:body>
 </html>
